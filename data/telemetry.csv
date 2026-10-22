@@ -1,0 +1,16 @@
+step,sensor_name,value,unit,status
+1,Temperature,24.36,Celsius,VALID
+1,Speed,80.37,km/h,VALID
+1,Altitude,119.55,m,VALID
+2,Temperature,24.27,Celsius,VALID
+2,Speed,81.90,km/h,VALID
+2,Altitude,120.37,m,VALID
+3,Temperature,24.41,Celsius,VALID
+3,Speed,81.98,km/h,VALID
+3,Altitude,120.07,m,VALID
+4,Temperature,24.18,Celsius,VALID
+4,Speed,82.18,km/h,VALID
+4,Altitude,119.55,m,VALID
+5,Temperature,23.90,Celsius,VALID
+5,Speed,80.85,km/h,VALID
+5,Altitude,119.38,m,VALID
