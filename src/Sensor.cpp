@@ -2,6 +2,7 @@
 #include "Sensor.h"
 
 #include <random>
+#include <stdexcept>
 
 namespace {
     double generateChange(double minimum, double maximum) {
@@ -29,6 +30,33 @@ Sensor::Sensor(const std::string& sensorName,
       maxChange(maximumChange),
       minValue(minimumValue),
       maxValue(maximumValue) {
+
+    if (sensorName.empty()) {
+        throw std::invalid_argument("Sensor name cannot be empty.");
+    }
+
+    if (sensorUnit.empty()) {
+        throw std::invalid_argument("Sensor unit cannot be empty.");
+    }
+
+    if (minimumChange > maximumChange) {
+        throw std::invalid_argument(
+            "Minimum change cannot exceed maximum change."
+        );
+    }
+
+    if (minimumValue >= maximumValue) {
+        throw std::invalid_argument(
+            "Minimum value must be less than maximum value."
+        );
+    }
+
+    if (initialValue < minimumValue ||
+        initialValue > maximumValue) {
+        throw std::invalid_argument(
+            "Initial value is outside the permitted range."
+        );
+    }
 }
 
 std::string Sensor::getName() const {

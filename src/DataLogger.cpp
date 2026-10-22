@@ -1,7 +1,8 @@
 
 #include "DataLogger.h"
-
+#include <iostream>
 #include <iomanip>
+
 
 DataLogger::DataLogger(const std::string& filename)
     : file(filename) {
@@ -9,7 +10,12 @@ DataLogger::DataLogger(const std::string& filename)
     if (file.is_open()) {
         file << "step,sensor_name,value,unit,status\n";
     }
+    else {
+        std::cerr << "Error: Could not open log file: "
+                  << filename << '\n';
+    }
 }
+
 
 bool DataLogger::isOpen() const {
     return file.is_open();

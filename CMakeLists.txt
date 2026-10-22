@@ -33,6 +33,23 @@ add_executable(test_validator
     src/DataValidator.cpp
 )
 
+add_executable(test_logger
+    tests/test_logger.cpp
+    src/Sensor.cpp
+    src/DataLogger.cpp
+)
+
+target_include_directories(test_logger PRIVATE include)
+
+if(MSVC)
+    target_compile_options(test_logger PRIVATE /W4)
+else()
+    target_compile_options(test_logger PRIVATE
+        -Wall -Wextra -pedantic
+    )
+endif()
+
+
 target_include_directories(test_validator PRIVATE include)
 
 if(MSVC)
@@ -43,9 +60,16 @@ else()
     )
 endif()
 
+
 enable_testing()
 
 add_test(
     NAME DataValidatorTest
     COMMAND test_validator
 )
+
+add_test(
+    NAME DataLoggerTest
+    COMMAND test_logger
+)
+
