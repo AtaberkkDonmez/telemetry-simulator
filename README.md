@@ -7,8 +7,11 @@ A C++17 console application that simulates sensor measurements, validates data, 
 - Simulates temperature, speed, and altitude sensors.
 - Generates random changes in sensor measurements.
 - Validates sensor values against minimum and maximum limits.
-- Records measurement data and validation statuses in a CSV file.
-- Includes automated tests for normal values and boundary conditions.
+- Rejects invalid sensor configurations using exceptions.
+- Handles CSV file opening failures.
+- Records measurements and validation statuses in CSV format.
+- Configures the simulation step count through `config.txt`.
+- Includes automated tests for data validation and CSV logging.
 
 ## Technologies
 
@@ -23,22 +26,37 @@ A C++17 console application that simulates sensor measurements, validates data, 
 
 ```text
 telemetry-simulator/
-├── include/
-│   ├── Sensor.h
-│   ├── DataValidator.h
-│   └── DataLogger.h
-├── src/
-│   ├── main.cpp
-│   ├── Sensor.cpp
-│   ├── DataValidator.cpp
-│   └── DataLogger.cpp
-├── tests/
-│   └── test_validator.cpp
-├── data/
-│   └── telemetry.csv
-├── CMakeLists.txt
-└── README.md
+|-- include/
+|   |-- Sensor.h
+|   |-- DataValidator.h
+|   |-- DataLogger.h
+|-- src/
+|   |-- main.cpp
+|   |-- Sensor.cpp
+|   |-- DataValidator.cpp
+|   |-- DataLogger.cpp
+|-- tests/
+|   |-- test_validator.cpp
+|   |-- test_logger.cpp
+|-- data/
+|   |-- telemetry.csv
+|-- config.txt
+|-- CMakeLists.txt
+|-- README.md
+|-- .gitignore
 ```
+
+## Configuration
+
+The `config.txt` file controls the number of simulation steps.
+
+Example:
+
+```text
+simulation_steps=5
+```
+
+The value must be greater than zero. Sensor limits are currently defined in the source code.
 
 ## Build
 
@@ -48,7 +66,7 @@ Configure the project:
 cmake -S . -B build -G "MinGW Makefiles"
 ```
 
-Build the application and test executable:
+Build the application and tests:
 
 ```powershell
 cmake --build build
@@ -62,18 +80,20 @@ Run the application from the project root directory:
 .\build\telemetry.exe
 ```
 
-The application writes sensor measurements and validation statuses to `data/telemetry.csv`. The CSV file may be overwritten each time the application starts.
+The application reads `config.txt` and writes measurements and validation statuses to `data/telemetry.csv`. The CSV output may change each time the simulation runs.
+
+The application reports an error if the configuration file is missing or invalid, or if the CSV file cannot be opened.
 
 ## Run Tests
 
-Run the automated tests:
+Run all registered tests:
 
 ```powershell
 ctest --test-dir build --output-on-failure
 ```
 
-The tests cover normal values, minimum and maximum boundaries, and values outside the permitted range.
+The tests cover normal values, boundary conditions, invalid sensor configurations, CSV headers, and measurement formatting.
 
 ## Project Purpose
 
-This project was developed to practice C++ object-oriented programming, encapsulation, separation of responsibilities, data validation, file handling, automated testing, and build configuration.
+This project was developed to practice C++ object-oriented programming, encapsulation, separation of responsibilities, data validation, exception handling, file handling, automated testing, and build configuration.
